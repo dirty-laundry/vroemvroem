@@ -1,5 +1,7 @@
 # Vroem vroem
 
+<img alt="Logo vroemvroem" src="https://github.com/dirty-laundry/vroemvroem/raw/master/logo.svg" width="100">
+
 Use vroemvroem to track your vehicle fuel consumption and expenses.
 
 ## Getting Started
@@ -46,4 +48,6 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details
+
+Logo made by [Surang](https://www.flaticon.com/authors/surang) from [Flagicon](https://www.flaticon.com)
