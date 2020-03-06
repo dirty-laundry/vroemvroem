@@ -1,6 +1,6 @@
 # Vroem vroem
 
-<img alt="Logo vroemvroem" src="https://github.com/dirty-laundry/vroemvroem/raw/master/logo.svg" width="100">
+<img alt="Logo vroemvroem" src="https://github.com/dirty-laundry/vroemvroem/raw/master/logo.svg?sanitize=true" width="100">
 
 Use vroemvroem to track your vehicle fuel consumption and expenses.
 
