@@ -1,0 +1,84 @@
+version: '3.7'
+
+services:
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    image: vroemvroem-nginx
+    container_name: vroemvroem-nginx
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.vroemvroem.rule=Host(`vroemvroem.localhost`)
+    volumes:
+      - ./backend/public:/srv/public
+    expose:
+      - 8000
+    depends_on:
+      - fpm
+    networks:
+      traefik_dirty-laundry:
+      vroemvroem:
+        aliases:
+          - nginx
+    cap_drop:
+    - ALL
+    healthcheck:
+        test: nc -z localhost 8000
+        interval: 5s
+
+  fpm:
+    build:
+      context: .
+      dockerfile: docker/fpm/Dockerfile
+      target: base
+    image: vroemvroem-fpm:base
+    container_name: vroemvroem-fpm
+    restart: unless-stopped
+    user: $DOCKER_UID:$DOCKER_GID
+    env_file:
+      - backend/.env
+    working_dir: /srv
+    volumes:
+      - ./backend/:/srv
+    tmpfs:
+      - /tmp
+    networks:
+      vroemvroem:
+        aliases:
+          - fcgi
+    healthcheck:
+      test: nc -z localhost 9000
+      interval: 5s
+
+  composer:
+    build:
+      context: .
+      dockerfile: docker/fpm/Dockerfile
+      target: composer
+    image: vroemvroem-fpm:composer
+    container_name: vroemvroem-composer
+    init: true
+    command:
+      - 'true'
+    user: $DOCKER_UID:$DOCKER_GID
+    env_file:
+      - backend/.env
+    working_dir: /srv
+    volumes:
+      - ./backend:/srv
+    tmpfs:
+      - /tmp
+      - /.composer
+    healthcheck:
+      test: nc -z localhost 9000
+      interval: 5s
+
+networks:
+
+  vroemvroem:
+
+  traefik_dirty-laundry:
+    external: true
